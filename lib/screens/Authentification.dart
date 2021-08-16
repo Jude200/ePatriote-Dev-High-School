@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flu/constants.dart';
+import 'package:flutter_flu/models/user.dart';
 import 'package:flutter_flu/screens/StudentScreens/StudentHomepage.dart';
 import 'package:flutter_flu/screens/login.dart';
+import 'package:flutter_flu/screens/presentation.dart';
 import 'package:flutter_flu/services/flushBar.dart';
+import 'package:flutter_flu/services/sqflitehelper.dart';
 
 class Authentification extends StatefulWidget {
   const Authentification({Key key}) : super(key: key);
@@ -12,7 +15,14 @@ class Authentification extends StatefulWidget {
 }
 
 class _AuthentificationState extends State<Authentification> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _name;
+  String _email;
+  String _phone;
+  String _password;
+  bool shouldValidate = false;
   bool isVisible = false;
+  SqfLiteHelper sqfLite = SqfLiteHelper();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,24 +54,36 @@ class _AuthentificationState extends State<Authentification> {
                           size: 60,
                         )),
                     Form(
+                      key: _formKey,
                       child: Column(
                         children: [
                           Container(
-                              margin: EdgeInsets.only(top: 20, bottom: 10),
-                              width: width(context) * 0.8,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: TextFormField(
-                                cursorColor: Colors.black54,
-                                cursorHeight: 20,
-                                decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    hintText: "Nom et Prenom",
-                                    prefixIcon: Icon(Icons.person)),
-                              )),
+                            margin: EdgeInsets.only(top: 20, bottom: 10),
+                            width: width(context) * 0.8,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: TextFormField(
+                              cursorColor: Colors.black54,
+                              cursorHeight: 20,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  hintText: "Nom et Prenom",
+                                  prefixIcon: Icon(Icons.person)),
+                              validator: (value) {
+                                if ((value == null) ||
+                                    (value.trim().length == 0)) {
+                                  return "Le nom ne peut être vide";
+                                }
+                                return null;
+                              },
+                              onSaved: (nameInField) {
+                                _name = nameInField;
+                              },
+                            ),
+                          ),
                           Container(
                               margin: EdgeInsets.only(top: 20, bottom: 10),
                               width: width(context) * 0.8,
@@ -77,6 +99,16 @@ class _AuthentificationState extends State<Authentification> {
                                     ),
                                     hintText: "Email",
                                     prefixIcon: Icon(Icons.mail)),
+                                validator: (value) {
+                                  if ((value == null) ||
+                                      (value.trim().length == 0)) {
+                                    return "L'adresse mail ne peut être vide";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (nameInField) {
+                                  _email = nameInField;
+                                },
                               )),
                           Container(
                               margin: EdgeInsets.only(top: 20, bottom: 10),
@@ -85,33 +117,90 @@ class _AuthentificationState extends State<Authentification> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20)),
                               child: TextFormField(
+                                maxLength: 8,
                                 cursorColor: Colors.black54,
                                 cursorHeight: 20,
-                                obscureText: !isVisible,
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
                                     ),
-                                    hintText: "Mot de passe",
-                                    prefixIcon: Icon(Icons.password),
-                                    suffixIcon: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          isVisible = !isVisible;
-                                        });
-                                      },
-                                      icon: !isVisible
-                                          ? Icon(Icons.remove_red_eye)
-                                          : Icon(Icons.person),
-                                    )),
+                                    hintText: "Numéro de téléphone",
+                                    prefixIcon: Icon(Icons.phone)),
+                                validator: (value) {
+                                  if ((value == null) ||
+                                      (value.trim().length == 0)) {
+                                    return "Le numéro de téléphone ne peut être vide";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (nameInField) {
+                                  _phone = nameInField;
+                                },
                               )),
+                          Container(
+                            margin: EdgeInsets.only(top: 20, bottom: 10),
+                            width: width(context) * 0.8,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: TextFormField(
+                              cursorColor: Colors.black54,
+                              cursorHeight: 20,
+                              obscureText: !isVisible,
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  hintText: "Mot de passe",
+                                  prefixIcon: Icon(Icons.password),
+                                  suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isVisible = !isVisible;
+                                      });
+                                    },
+                                    icon: !isVisible
+                                        ? Icon(Icons.remove_red_eye)
+                                        : Icon(Icons.person),
+                                  )),
+                              validator: (value) {
+                                if ((value == null) ||
+                                    (value.trim().length == 0) ||
+                                    value.length < 9) {
+                                  return "Au moins 08 caractère";
+                                }
+                                return null;
+                              },
+                              onSaved: (nameInField) {
+                                _password = nameInField;
+                              },
+                            ),
+                          ),
                           GestureDetector(
-                            onTap: () {
-                              flushBarAdd(context);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => StudentHomePage()));
+                            onTap: () async {
+                              bool b =
+                                  _formKey.currentState?.validate() ?? false;
+                              setState(() {
+                                shouldValidate = true;
+                              });
+                              if (b) {
+                                _formKey.currentState?.save();
+                                User _user = User(
+                                  name: _name,
+                                  email: _email,
+                                  phone: _phone,
+                                  password: _password,
+                                  date: DateTime.now().toString(),
+                                  statut: "user",
+                                );
+                                await sqfLite.insert(_user);
+                                await flushBarAdd(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Presentation(user: _user)));
+                              }
                             },
                             child: Container(
                                 margin: EdgeInsets.symmetric(vertical: 20),
