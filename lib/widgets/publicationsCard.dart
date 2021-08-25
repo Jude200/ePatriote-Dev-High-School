@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flu/constants.dart';
 import 'package:flutter_flu/models/publications.dart';
 import 'package:flutter_flu/screens/ViewPubliPage.dart';
 
@@ -18,9 +17,17 @@ class PublicationCard extends StatelessWidget {
                   builder: (context) => PubliView(publication: publication)));
         },
         child: Container(
-          width: width(context),
+          width: double.infinity,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                  offset: Offset(0, 3),
+                  blurRadius: 3.0,
+                  spreadRadius: 2.0,
+                  color: Colors.grey.withOpacity(.7)),
+            ],
             border: Border.all(style: BorderStyle.solid, color: Colors.blue),
           ),
           padding: EdgeInsets.all(10),

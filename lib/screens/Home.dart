@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flu/constants.dart';
 import 'package:flutter_flu/models/user.dart';
-import 'package:flutter_flu/screens/StudentScreens/StudentHomepage.dart';
-import 'package:flutter_flu/screens/login.dart';
 import 'package:flutter_flu/screens/presentation.dart';
 import 'package:flutter_flu/services/flushBar.dart';
 import 'package:flutter_flu/services/sqflitehelper.dart';
@@ -60,16 +58,10 @@ class _AuthentificationState extends State<Authentification> {
                           Container(
                             margin: EdgeInsets.only(top: 20, bottom: 10),
                             width: width(context) * 0.8,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20)),
                             child: TextFormField(
                               cursorColor: Colors.black54,
                               cursorHeight: 20,
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                  ),
                                   hintText: "Nom et Prenom",
                                   prefixIcon: Icon(Icons.person)),
                               validator: (value) {
@@ -87,16 +79,10 @@ class _AuthentificationState extends State<Authentification> {
                           Container(
                               margin: EdgeInsets.only(top: 20, bottom: 10),
                               width: width(context) * 0.8,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
                               child: TextFormField(
                                 cursorColor: Colors.black54,
                                 cursorHeight: 20,
                                 decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
                                     hintText: "Email",
                                     prefixIcon: Icon(Icons.mail)),
                                 validator: (value) {
@@ -113,17 +99,11 @@ class _AuthentificationState extends State<Authentification> {
                           Container(
                               margin: EdgeInsets.only(top: 20, bottom: 10),
                               width: width(context) * 0.8,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
                               child: TextFormField(
                                 maxLength: 8,
                                 cursorColor: Colors.black54,
                                 cursorHeight: 20,
                                 decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderSide: BorderSide.none,
-                                    ),
                                     hintText: "Numéro de téléphone",
                                     prefixIcon: Icon(Icons.phone)),
                                 validator: (value) {
@@ -140,17 +120,11 @@ class _AuthentificationState extends State<Authentification> {
                           Container(
                             margin: EdgeInsets.only(top: 20, bottom: 10),
                             width: width(context) * 0.8,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20)),
                             child: TextFormField(
                               cursorColor: Colors.black54,
                               cursorHeight: 20,
                               obscureText: !isVisible,
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                  ),
                                   hintText: "Mot de passe",
                                   prefixIcon: Icon(Icons.password),
                                   suffixIcon: IconButton(
@@ -160,8 +134,8 @@ class _AuthentificationState extends State<Authentification> {
                                       });
                                     },
                                     icon: !isVisible
-                                        ? Icon(Icons.remove_red_eye)
-                                        : Icon(Icons.person),
+                                        ? Icon(Icons.lock)
+                                        : Icon(Icons.lock_open),
                                   )),
                               validator: (value) {
                                 if ((value == null) ||
@@ -234,13 +208,10 @@ class _AuthentificationState extends State<Authentification> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Vous avez déja un compte ?"),
-                  GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login()));
-                      },
-                      child: Text("  Se connecter ?",
-                          style: TextStyle(color: Colors.blue)))
+                  TextButton(
+                    onPressed: () {},
+                    child: Text("S'inscrire"),
+                  )
                 ],
               ),
             )

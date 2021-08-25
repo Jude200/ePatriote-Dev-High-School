@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flu/models/publications.dart';
-import '../constants.dart';
+import 'package:flutter_flu/widgets/AppBar.dart';
 
 class PubliView extends StatefulWidget {
   final Publications publication;
@@ -15,10 +15,7 @@ class _PubliViewState extends State<PubliView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: appBackgroundColor,
-          title: Text(schoolName),
-        ),
+        appBar: MyAppBar(),
         body: ListView(
           children: [
             Column(
@@ -37,6 +34,12 @@ class _PubliViewState extends State<PubliView> {
                   padding: EdgeInsets.all(20),
                   width: double.infinity,
                   child: Text("${widget.publication.post}",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  width: double.infinity,
+                  child: Text("Sujet : ${widget.publication.title}",
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
                 Container(

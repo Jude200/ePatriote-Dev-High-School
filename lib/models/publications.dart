@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class Publications {
   int id; // identifiant de la publication
-  String author; // nom et prenom de la personne qui à l'a publié
+  String author; // nom et prenom de la personne qui à l'a
+  String title; // sujet de la publication
   String container; // contenu de la publication
   String date; // date de la publication
   String file; // fichier (photo, pdf, excel et autre)
@@ -11,6 +12,7 @@ class Publications {
   Publications({
     this.id,
     @required this.author,
+    @required title,
     @required this.container,
     @required this.date,
     this.file,
@@ -32,6 +34,7 @@ class Publications {
     return Publications(
       id: map['id'],
       author: map['author'],
+      title: map['title'],
       container: map['container'],
       date: map['date'],
       file: map['file'],

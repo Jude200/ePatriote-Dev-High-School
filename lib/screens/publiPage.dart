@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flu/models/data.dart';
+import 'package:flutter_flu/models/dataBase/data.dart';
+import 'package:flutter_flu/models/user.dart';
+import 'package:flutter_flu/widgets/floatingbutton.dart';
 import 'package:flutter_flu/widgets/publicationsCard.dart';
 
 class PubliPage extends StatefulWidget {
-  const PubliPage({Key key}) : super(key: key);
+  final User user;
+  const PubliPage({Key key, @required this.user}) : super(key: key);
 
   @override
   _PubliPageState createState() => _PubliPageState();
@@ -17,7 +20,7 @@ class _PubliPageState extends State<PubliPage> {
         Expanded(
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 10),
-            padding: EdgeInsets.symmetric(horizontal: 05.00),
+            padding: EdgeInsets.symmetric(horizontal: 5.0),
             child: ListView.separated(
                 itemBuilder: (BuildContext context, int index) {
                   return PublicationCard(
@@ -29,7 +32,10 @@ class _PubliPageState extends State<PubliPage> {
                 },
                 itemCount: publications.length),
           ),
-        )
+        ),
+        widget.user.statut == "censeur" || widget.user.statut == "professeur"
+            ? FloatingButton()
+            : Container()
       ],
     );
   }

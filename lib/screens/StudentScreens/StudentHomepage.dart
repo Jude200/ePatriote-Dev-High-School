@@ -21,28 +21,35 @@ class _StudentHomePageState extends State<StudentHomePage> {
       child: Scaffold(
         drawer: AppDrawer(user: widget.user),
         appBar: AppBar(
+          leading: Icon(Icons.menu_book, color: Colors.black),
           backgroundColor: appBackgroundColor,
-          title: Text(schoolName),
+          title: Text(schoolName, style: TextStyle(color: Colors.black)),
           bottom: TabBar(
             indicatorColor: Colors.green,
             tabs: [
               Tab(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Icon(Icons.new_label_sharp), Text("   Nouvelles")],
+                  children: [
+                    Icon(Icons.new_label_sharp),
+                    Text("   Nouvelles", style: TextStyle(color: Colors.black))
+                  ],
                 ),
               ),
               Tab(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Icon(Icons.list), Text("   Bulletins")],
+                  children: [
+                    Icon(Icons.list),
+                    Text("   Bulletins", style: TextStyle(color: Colors.black))
+                  ],
                 ),
               )
             ],
           ),
         ),
         body: TabBarView(
-          children: [PubliPage(), BullPage()],
+          children: [PubliPage(user: widget.user), BullPage()],
         ),
       ),
     );

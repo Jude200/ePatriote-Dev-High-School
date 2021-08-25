@@ -16,7 +16,8 @@ class AppDrawer extends StatelessWidget {
         child: ListView(
           children: [
             UserAccountsDrawerHeader(
-                currentAccountPicture: Image.asset(defaultImage),
+                currentAccountPicture:
+                    Image.asset(defaultImage, fit: BoxFit.cover),
                 accountName: Text(user.name),
                 accountEmail: Text(user.email)),
             SizedBox(height: 20),
@@ -33,8 +34,7 @@ class AppDrawer extends StatelessWidget {
                         child: Icon(Icons.settings)),
                     Container(
                         child: Text("Paramètre",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18)))
+                            style: TextStyle(fontWeight: FontWeight.bold)))
                   ],
                 ),
               ),
@@ -47,8 +47,7 @@ class AppDrawer extends StatelessWidget {
                       padding: EdgeInsets.all(20), child: Icon(Icons.star)),
                   Container(
                       child: Text("Notez l'application",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)))
+                          style: TextStyle(fontWeight: FontWeight.bold)))
                 ],
               ),
             ),
@@ -61,8 +60,7 @@ class AppDrawer extends StatelessWidget {
                       child: Icon(Icons.account_balance_outlined)),
                   Container(
                       child: Text("A propos",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)))
+                          style: TextStyle(fontWeight: FontWeight.bold)))
                 ],
               ),
             ),
@@ -75,8 +73,7 @@ class AppDrawer extends StatelessWidget {
                       child: Icon(Icons.contact_mail)),
                   Container(
                       child: Text("Nous contactez",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18)))
+                          style: TextStyle(fontWeight: FontWeight.bold)))
                 ],
               ),
             ),
@@ -93,8 +90,7 @@ class AppDrawer extends StatelessWidget {
                         padding: EdgeInsets.all(20), child: Icon(Icons.logout)),
                     Container(
                         child: Text("Se deconnecter",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18)))
+                            style: TextStyle(fontWeight: FontWeight.bold)))
                   ],
                 ),
               ),

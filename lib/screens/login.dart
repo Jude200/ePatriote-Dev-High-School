@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flu/constants.dart';
+import 'package:flutter_flu/models/dataBase/test.dart';
 import 'package:flutter_flu/models/user.dart';
-import 'package:flutter_flu/screens/Authentification.dart';
+import 'package:flutter_flu/screens/Administration/CensorHomePage.dart';
+import 'package:flutter_flu/screens/Home.dart';
 import 'package:flutter_flu/screens/StudentScreens/StudentHomepage.dart';
 import 'package:flutter_flu/screens/presentation.dart';
 import 'package:flutter_flu/services/flushBar.dart';
@@ -21,10 +23,9 @@ class _LoginState extends State<Login> {
   String _password;
   bool shouldValidate = false;
   User user;
-
+  bool isVisible = false;
   @override
   Widget build(BuildContext context) {
-    bool isVisible = false;
     return SafeArea(
       child: Scaffold(
         body: ListView(
@@ -61,16 +62,10 @@ class _LoginState extends State<Login> {
                             Container(
                                 margin: EdgeInsets.only(top: 20, bottom: 10),
                                 width: width(context) * 0.8,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
                                 child: TextFormField(
                                   cursorColor: Colors.black54,
                                   cursorHeight: 20,
                                   decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                      ),
                                       hintText: "Email",
                                       prefixIcon: Icon(Icons.mail)),
                                   validator: (value) {
@@ -87,17 +82,11 @@ class _LoginState extends State<Login> {
                             Container(
                                 margin: EdgeInsets.only(top: 20, bottom: 10),
                                 width: width(context) * 0.8,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
                                 child: TextFormField(
                                   cursorColor: Colors.black54,
                                   cursorHeight: 20,
                                   obscureText: !isVisible,
                                   decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                      ),
                                       hintText: "Mot de passe",
                                       prefixIcon: Icon(Icons.password),
                                       suffixIcon: IconButton(
@@ -107,8 +96,8 @@ class _LoginState extends State<Login> {
                                           });
                                         },
                                         icon: !isVisible
-                                            ? Icon(Icons.remove_red_eye)
-                                            : Icon(Icons.person),
+                                            ? Icon(Icons.lock)
+                                            : Icon(Icons.lock_open_outlined),
                                       )),
                                   onSaved: (nameInField) {
                                     _password = nameInField;
@@ -133,6 +122,7 @@ class _LoginState extends State<Login> {
                                 });
                                 if (b) {
                                   _key.currentState?.save();
+                                  await insertDb();
                                   user = await sqfLite.getUser(_email);
                                   if (user.password != _password) {
                                     setState(() {
@@ -148,7 +138,13 @@ class _LoginState extends State<Login> {
                                             builder: (context) => user.statut ==
                                                     "user"
                                                 ? Presentation(user: user)
-                                                : StudentHomePage(user: user)));
+                                                : (user.statut == "élève" ||
+                                                        user.statut ==
+                                                            "parent d'élève")
+                                                    ? StudentHomePage(
+                                                        user: user)
+                                                    : CensorHomePage(
+                                                        user: user)));
                                   }
                                 }
                               },
