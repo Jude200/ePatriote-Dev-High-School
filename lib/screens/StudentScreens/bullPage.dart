@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_flu/utils/list.dart';
+import 'package:flutter_flu/services/allFunctions.dart';
 
 class BullPage extends StatefulWidget {
   const BullPage({Key key}) : super(key: key);
@@ -12,13 +12,6 @@ class BullPage extends StatefulWidget {
 }
 
 class _BullPageState extends State<BullPage> {
-  static List<String> matterT = matter;
-  final List<ListTile> matterList = matterT
-      .map((e) => ListTile(
-            title: Text(e),
-            trailing: Icon(Icons.arrow_right_outlined, color: Colors.black),
-          ))
-      .toList();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +21,7 @@ class _BullPageState extends State<BullPage> {
           child: ExpansionTile(
             title: Text("Mes Notes",
                 style: TextStyle(fontWeight: FontWeight.bold)),
-            children: matterList,
+            children: itemListTileMater(context),
           ),
         ),
       ],
